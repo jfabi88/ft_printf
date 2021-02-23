@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include "ft_printf.h"
+
 int test_p()
 {
     char    *str;
@@ -90,8 +93,8 @@ int test_p5()
 
     printf("test_p5\n");
     str = "rosso mal palo";
-    num1 = printf("Il puntatore della stringa e': %20.50p\n", str);
-    num2 = ft_printf("Il puntatore della stringa e': %20.50p\n", str);
+    num1 = printf("Il puntatore della stringa e': %020.14p\n", str);
+    num2 = ft_printf("Il puntatore della stringa e': %020.14p\n", str);
     if (num1 == num2)
         return (1);
     printf("Il suo numero e': %d\n", num1);

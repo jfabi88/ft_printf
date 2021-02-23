@@ -18,6 +18,33 @@ int	ft_isdigit(int c)
 	return (0);
 }
 
+char    *dtoesabig(long int num)
+{
+    char    *conv;
+    char    *str;
+    int     i;
+    long int     d;
+
+    i = 1;
+    d = 16;
+    while (num / d >= 1)
+    {
+        d *= 16;
+        i++;
+    }
+    str = malloc(i + 1);
+    str[i--] = 0;
+    conv = "0123456789ABCDEF";
+    while (num / 16 >= 1)
+    {
+        str[i] = conv[(num % 16)];
+        i--;
+        num /= 16;
+    }
+    str[i] = conv[(num % 16)];
+    return (str);
+}
+
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
 	size_t	i;
@@ -85,4 +112,31 @@ char	*ft_strchr(const char *s, int c)
 	if (s[i] == c)
 		return ((char *)(s + i));
 	return (0);
+}
+
+char    *dtoesa(long int num)
+{
+    char    *conv;
+    char    *str;
+    int     i;
+    long int     d;
+
+    i = 1;
+    d = 16;
+    while (num / d >= 1)
+    {
+        d *= 16;
+        i++;
+    }
+    str = malloc(i + 1);
+    str[i--] = 0;
+    conv = "0123456789abcdef";
+    while (num / 16 >= 1)
+    {
+        str[i] = conv[(num % 16)];
+        i--;
+        num /= 16;
+    }
+    str[i] = conv[(num % 16)];
+    return (str);
 }

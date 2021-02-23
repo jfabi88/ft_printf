@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 
-int    printa_numero(char *str)
+int    printa_nonsegnato(char *str)
 {
     int i;
 
@@ -13,7 +13,7 @@ int    printa_numero(char *str)
     return (i);
 }
 
-int     printa_grandezza_d_minus(char *str, char *flag, int width, int precisione)
+int     printa_grandezza_u_minus(char *str, char *flag, int width, int precisione)
 {
     char    *ret;
     int     i;
@@ -30,15 +30,15 @@ int     printa_grandezza_d_minus(char *str, char *flag, int width, int precision
         while (i < width)
             ret[i++] = ' ';
         ret[i] = 0;
-        i = printa_numero(ret);
+        i = printa_nonsegnato(ret);
         free(ret);
     }
     else
-        i = printa_numero(str);
+        i = printa_nonsegnato(str);
     return (i);
 }
 
-int     printa_grandezza_d(char *str, char *flag, int width, int precisione)
+int     printa_grandezza_u(char *str, char *flag, int width, int precisione)
 {
     char    *ret;
     int     i;
@@ -62,12 +62,12 @@ int     printa_grandezza_d(char *str, char *flag, int width, int precisione)
     while (str[j] != 0)
         ret[i++] = str[j++];
     ret[i] = 0;
-    i = printa_numero(ret);
+    i = printa_nonsegnato(ret);
     free(ret);
     return(i);
 }
 
-int printa_estensione_d(char *str, char *flag, int width, int precisione)
+int printa_estensione_u(char *str, char *flag, int width, int precisione)
 {
     char    *ret;
     int     i;
@@ -89,21 +89,21 @@ int printa_estensione_d(char *str, char *flag, int width, int precisione)
     if (str[0] == '-')
         ret[0] = str[0];
     if (flag[0] == '-')
-        i = printa_grandezza_d_minus(ret, flag, width, precisione);
+        i = printa_grandezza_u_minus(ret, flag, width, precisione);
     else
-        i = printa_grandezza_d(ret, flag, width, precisione);
+        i = printa_grandezza_u(ret, flag, width, precisione);
     free(ret);
     return (i);
 }
 
-int intero(va_list args ,char *flag, int width, int precisione)
+int nonsegnato(va_list args ,char *flag, int width, int precisione)
 {
     int     count;
-    int     numero;
+    unsigned int     numero;
     char    *str;
 
-    numero = va_arg(args, int);
-    str = ft_itoa(numero);
+    numero = va_arg(args, unsigned int);
+    str = ft_utoa(numero);
     if (str[0] == '-' && precisione < ft_strlen(str) - 1)
     {
         precisione = ft_strlen(str) - 1;  
@@ -114,6 +114,6 @@ int intero(va_list args ,char *flag, int width, int precisione)
         precisione = ft_strlen(str);
     if (width < precisione)
         width = precisione;
-    count = printa_estensione_d(str, flag, width, precisione);
+    count = printa_estensione_u(str, flag, width, precisione);
     return (count);
 }

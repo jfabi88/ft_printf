@@ -113,15 +113,15 @@ int	controllo(char *input, va_list args)
 		count = carattere(args, flag, width);
 	else if (ret[ft_strlen(ret) - 1] == 's')
 		count = stringa(args, flag, width, precisione);
-	//else if (ret[ft_strlen(ret) - 1] == 'p')
-	//	count = puntatore(args, flag, width, precisione);
-	if (ret[ft_strlen(ret) - 1] == 'd' || ret[0] == 'i')
+	else if (ret[ft_strlen(ret) - 1] == 'p')
+		count = puntatore(args, flag, width, precisione);
+	else if (ret[ft_strlen(ret) - 1] == 'd' || ret[0] == 'i')
 		count = intero(args, flag, width, precisione);
-	//if (ret[ft_strlen(ret - 1]) == 'u')
-	//	count = nonsegnato(&args, flag, width);
-	//if (ret[ft_strlen(ret) - 1] == 'x')
-	//	count = esadecimale(&args, flag, width);
-	//if (ret[ft_strlen(ret) - 1] == 'X')
-	//	count = maxesadeccimale(&args, flag, width);
+	else if (ret[ft_strlen(ret) - 1] == 'u')
+		count = nonsegnato(args, flag, width, precisione);
+	else if (ret[ft_strlen(ret) - 1] == 'x')
+		count = esadecimale(args, flag, width, precisione);
+	else if (ret[ft_strlen(ret) - 1] == 'X')
+		count = esadecimalebig(args, flag, width, precisione);
 	return (count);
 }

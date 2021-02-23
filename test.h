@@ -8,5 +8,8 @@
 
 int test_carattere();
 int test_stringa();
+int test_intero();
+int test_unsigned();
+int test_esadecimale();
 
 #endif

@@ -23,7 +23,7 @@ int     printa_grandezza_minus_p(char *str, char *flag, int width, int precision
     j = 0;
     if ((ret = malloc(width + 1)) == 0)
         return (-1);
-    while(i < (precisione - ft_strlen(str)))
+    while (i < 2)
         ret[i++] = '0';
     while (str[j] != 0)
         ret[i++] = str[j++];
@@ -43,16 +43,17 @@ int     printa_grandezza_p(char *str, char *flag, int width, int precisione)
 
     i = 0;
     j = 0;
+    printf("Il carattere è: %c\n", flag[2]);
     if ((ret = malloc(width + 1)) == 0)
             return (-1);
-    while (i < precisione - ft_strlen(str) || i < width - ft_strlen(str))
+    while (i < width - ft_strlen(str) - 2)
     {
-        if ((width - precisione) <= i || (precisione < 0 && flag[1] == '0'))
+        if (flag[1] == '0' && flag[2] != '1')
             ret[i++] = '0';
         else
             ret[i++] = ' ';
     }
-    while (i < (width - ft_strlen(str)))
+    while (i < width - ft_strlen(str))
         ret[i++] = '0';
     while (str[j] != 0)
         ret[i++] = str[j++];
@@ -62,46 +63,46 @@ int     printa_grandezza_p(char *str, char *flag, int width, int precisione)
     return (i);
 }
 
-char    *conversione(long int num)
+int    printa_precisione_p(char *str, char *flag, int width, int precisione)
 {
-    char    *conv;
-    char    *str;
-    int     i;
-    long int     d;
+    int j;
+    int i;
+    int count;
+    char *ret;
 
-    i = 1;
-    d = 16;
-    while (num / d >= 1)
-    {
-        d *= 16;
-        i++;
-    }
-    str = malloc(i + 1);
-    str[i--] = 0;
-    conv = "0123456789abcdef";
-    while (num / 16 >= 1)
-    {
-        str[i] = conv[(num % 16)];
-        i--;
-        num /= 16;
-    }
-    str[i] = conv[(num % 16)];
-    return (str);
+    i = 0;
+    j = 0;
+    if ((ret = malloc(precisione + 1)) == 0)
+            return (-1);
+    while (i < precisione - ft_strlen(str))
+            ret[i++] = '0';
+    while (str[j] != 0)
+        ret[i++] = str[j++];
+    ret[i] = 0;
+    if (flag[0] == '-')
+        count = printa_grandezza_minus_p(ret, flag, width, precisione);
+    else
+        count = printa_grandezza_p(ret, flag, width, precisione);
+    free(ret);
+    return (count);
 }
 
 int puntatore(va_list args, char *flag, int width, int precisione)
 {
-    int i;
+    int count;
     long int   num;
     char        *str;
 
     num = va_arg(args, long int);
-    str = conversione(num);
-    if (width < ft_strlen(str) + 2)
-        width = ft_strlen(str) + 2;
-    if (flag[0] == '-')
-        i = printa_grandezza_minus_p(str, flag, width, precisione);
-    else
-        i = printa_grandezza_p(str, flag, width, precisione);
-    return (i);
+    str = dtoesa(num);
+    printf("La precisione è: %d\n", precisione);
+    if (precisione > 0)
+        flag[2] = '1';
+    if (precisione < ft_strlen(str))
+        precisione = ft_strlen(str);
+    if (width < precisione + 2)
+        width = precisione + 2;
+    count = printa_precisione_p(str, flag, width, precisione);
+    free (str);
+    return (count);
 }
